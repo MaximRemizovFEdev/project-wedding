@@ -1,2 +1,2 @@
-# projects
-webreznov portfolio + rezyume
+# project-wedding
+HTML + JS + CSS
