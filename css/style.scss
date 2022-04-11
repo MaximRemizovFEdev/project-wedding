@@ -1,0 +1,1023 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+@import url('https://fonts.googleapis.com/css?family=PT+Serif:400,700');
+@font-face {
+  font-family: Arial;
+  src: url("../fonts/Ariel.ttf");
+}
+$color: #274D7E;//#98B296;
+$colorBtn: #FFFFFF;
+$color-dark: darken($color, 10%);
+
+@mixin position-center {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  margin: auto;
+}
+@mixin myFonts($myFamily, $myWeight, $mySize, $myColor){
+  font-family: $myFamily;
+  font-weight: $myWeight;
+  font-size: $mySize;
+  color: $myColor;
+}
+@mixin mySocial(){
+  display: inline-block;
+  position: relative;
+  img{
+    width: 30px;
+    height: 30px;
+    margin-left: 15px;
+    -webkit-transition: all .4s ease-out;
+    -moz-transition: all .4s ease-out;
+    -o-transition: all .4s ease-out;
+  }
+  img:hover{
+    -webkit-transform: scale(1.3);
+    -moz-transform: scale(1.3);
+    -o-transform: scale(1.3);
+  }
+}
+
+body{
+  padding: 0;
+  margin: 0;
+}
+
+/*------------header--------*/
+header{
+  width: 100%;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background: rgba(39,77,126,0.80);
+  /*-------------mobile menu---------------*/
+  button{display: none};
+  ul.menu{display: none};
+  /*-------------END mobile menu---------------*/
+  .left-container{
+    nav{
+      .list{
+        margin: 29px 0 0 40px;
+        padding: 0;
+        position: absolute;
+        &__item{
+          display: inline-block;
+          list-style:none;
+          margin-right: 10px;
+          &--link{
+            padding: 2px 5px;
+            text-decoration: none;
+            @include myFonts('Open sans', 600, 16px, #fff);
+            &:hover{
+              color: #cad6e6;
+              border-radius: 50%;
+            }
+          }
+        }
+        .line{
+          position: absolute;
+          width: 20px;
+          left: 0;
+          height: 1px;
+          background:#cad6e6;
+          border-radius: 50%;
+        }
+        .active{
+          color: #cad6e6;
+        }
+      }
+    }
+  }
+  #logo{
+    position: relative;
+    width: 150px;
+    height: 67px;
+    margin: 7px auto;
+    img{
+      width: 150px;
+      height: 67px;
+
+    }
+  }
+  .right-container{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    .social{
+      @include mySocial;
+    }
+    .callMe{
+       display: inline-block;
+       width: 200px;
+       max-height: 20px;
+       line-height: 20px;
+       padding: 8px 10px;
+       border: 3px solid white;
+       background: white;
+       margin: 0 40px;
+       text-align: center;
+       border-radius: 3px;
+      @include myFonts('Open sans', 700, 14px, $color);
+       a{
+         @include myFonts('Open sans', 700, 14px, $color);
+         text-decoration: none;
+       }
+     }
+    .callMe:hover{
+      border: 3px solid white;
+      background: none;
+      a{color: white}
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
+@media (min-width: 319px) and (max-width: 1280px) {
+  header{
+    .left-container{display: none;}
+    /*-------------mobile menu---------------*/
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        cursor: pointer;
+        padding: 6px 20px;
+        font-size: 48px;
+      }
+    }
+    button {
+      display: block;//добавил в исходник
+      opacity: 0.6;
+      background-color: transparent;
+      position: fixed;
+      z-index: 2;
+      top: 24px;
+      left: 24px;
+      border: none;
+      width: 36px;
+      height: 30px;
+      outline: none;
+      transition: opacity 0.2s ease-out;
+      &:before {
+        content: "";
+        @include position-center;
+        right: auto;
+        width: 100%;
+        background: linear-gradient(
+                        to bottom,
+                        $colorBtn, $colorBtn 20%,
+                        transparent 20%, transparent 40%,
+                        $colorBtn 40%, $colorBtn 60%,
+                        transparent 60%, transparent 80%,
+                        $colorBtn 80%, $colorBtn 100%
+        );
+        transition: opacity 0.2s ease-out,
+        width 0.2s 0.2s ease-out;
+      }
+      &:after {
+        opacity: 0;
+        content: 'x';
+        color: white;
+        position: absolute;
+        top: 16px;
+        left: -4px;
+        font-family: Arial, sans-serif;
+        font-size: 76px;
+        line-height: 0;
+        transition: opacity 0.4s ease-out;
+      }
+      &:active {
+        transform: translateY(2px);
+      }
+      &:hover {
+        opacity: 1;
+      }
+      .open & {
+        opacity: 1;
+        &:before {
+          opacity: 0;
+          width: 0;
+        }
+        &:after {
+          opacity: 1;
+          transform: translate3d(0,0,0)
+          rotate(360deg);
+          transition: transform 0.4s 1s ease-out,
+          opacity 0.4s 1s ease-out;
+        }
+      }
+    }
+    nav {
+      z-index: 1;
+      position: fixed;
+      top: -100%; left: 0;
+      width: 100%;
+      height: 100%;
+      transform: translate3d(0,0,0);
+      backface-visibility: hidden;
+      overflow: hidden;
+      &:before {
+        content: '';
+        @include position-center;
+        background: rgba($color-dark, 0.98);
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        border-radius: 100%;
+        transform: scale(0.04), translateY(9999px);
+        overflow: hidden;
+      }
+      .open & {
+        top: 0;
+        &:before {
+          animation: menu-animation 0.8s ease-out forwards;
+        }
+      }
+    }
+
+    ul.menu {
+      display: block;//добавил в исходник
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%,-50%,0);
+      -webkit-transform: translate3d(-50%, -50%, 0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      -webkit-perspective: 1000;
+      perspective: 1000;
+      color: white;
+      li {
+        opacity: 0;
+        text-align: center;
+        transform: translate3d(0,36px,0);
+        &:before {
+          content: '';
+          @include position-center;
+          left: auto;
+          background-color: white;
+          height: 100%;
+          width: 0;
+          overflow: hidden;
+          transition: width 0.14s ease-out;
+        }
+        &:after {
+          opacity: 0;
+          content: attr(data-text);
+          @include position-center;
+          color: $color;
+          overflow: hidden;
+          transform: translate(-24px, 6px);
+          transition: transform 0.1s ease-out,
+          opacity 0.1s ease-out;
+        }
+        &:hover {
+          &:before {
+            left: 0;
+            right: auto;
+            width: 100%;
+          }
+          &:after {
+            opacity: 1;
+            padding: 0 20px;
+            transform: translate(0px, 6px);
+            transition: transform 0.2s 0.14s ease-out,
+            opacity 0.2s 0.14s ease-out;
+          }
+        }
+        .open & {
+          opacity: 1;
+          transform: translate3d(0,0,0);
+          transition: transform 0.2s ease-out,
+          opacity 0.2s ease-out;
+          @for $i from 1 to 6 {
+            &:nth-child(#{$i}) { transition-delay: $i * 0.1s + 0.65s; }
+          }
+        }
+      }
+    }
+    /*-------------END mobile menu---------------*/
+  }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+  header{
+    .right-container{
+      .callMe{display: none}
+      .social{
+        margin-right: 20px;
+      }
+    }
+  }
+}
+@keyframes menu-animation {
+  0% {
+    opacity: 0;
+    transform: scale(0.04)
+    translateY(300%);
+  }
+  40% {
+    transform: scale(0.04)
+    translateY(0);
+    transition: ease-out;
+  }
+  40% {
+    transform: scale(0.04)
+    translateY(0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.02)
+    translateY(0px);
+  }
+  61% {
+    transform: scale(0.04);
+  }
+  99.9% {
+    height: 0;
+    padding-bottom: 100%;
+    border-radius: 100%;
+  }
+  100% {
+    transform: scale(2);
+    height: 100%;
+    padding-bottom: 0;
+    border-radius: 0;
+  }
+}
+/*---------END header--------*/
+
+/*-------------Main photo--------------*/
+#main{
+  height: 100vh;
+  background-image: url("../img/bg-1.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  .filter{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: -moz-linear-gradient(top, rgba(39,77,126,0.50), rgba(39,77,126,0.60));
+    background-image: -webkit-linear-gradient(top, rgba(39,77,126,0.50), rgba(39,77,126,0.60));
+    background-image: -o-linear-gradient(top, rgba(39,77,126,0.50), rgba(39,77,126,0.60));
+    background-image: -ms-linear-gradient(top, rgba(39,77,126,0.50), rgba(39,77,126,0.60));
+    background-image: linear-gradient(top, rgba(39,77,126,0.50), rgba(39,77,126,0.60));
+    .container{
+      max-width: 1200px;
+      width: 100%;
+      margin: auto;
+      position: relative;
+      #subTitle{
+        text-align: center;
+        margin-top: 78px;
+        position: absolute;
+        width: 100%;
+        p{
+          @include myFonts('PT serif', 300, 38px, rgba(255, 255, 255, 0.71));//38px
+          letter-spacing: 2px;
+        }
+      }
+      #Title{
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        height: 100vh;
+        width: 100%;
+        p{
+          @include myFonts('PT serif', 600, 82px, #FFFFFF);
+          letter-spacing: 2px;
+          line-height: 1.17;
+          text-align: center;
+        }
+      }
+      h1{
+        @include myFonts('Open sans', 300, 34px, #FFFFFF);//34px
+        text-align: center;
+        max-width: 1200px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        padding: 0 0 10% 0;//228px
+        letter-spacing: 1px;
+      }
+    }
+  }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+  #main{
+    background-image: url("../img/bg-1-mob2.jpg");
+    .filter{
+      .container{
+        #subTitle{
+          p{font-size: 5vh}
+        }
+        #Title{
+          p{font-size: 6vh}
+        }
+        h1{
+          font-size: 4vh;
+          padding: 0 0 128px 0;
+        }
+      }
+    }
+  }
+}
+/*-------------END Main photo--------------*/
+
+/*-----------------About-----------------*/
+#about{
+  background-color: #e0ecfc;
+  width: 100%;
+  padding: 150px 0;
+  .container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: auto;
+    .about__photo{
+      display: flex;
+      margin: 0 20px;
+      max-width: 560px;
+      width: 100%;
+      min-height: 560px;
+      background: url("../img/about1.jpg") no-repeat;
+      background-size: cover;
+      position: relative;
+      .social{
+        @include mySocial;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: left;
+        padding-bottom: 30px;
+      }
+    }
+    .about__block{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+      .about__text{
+        text-align: center;
+        max-width: 560px;
+        margin: 0 20px;
+        h3{
+          @include myFonts('PT serif', 600, 42px, #000);
+        }
+        h4{
+          @include myFonts(Arial, 300, 16px, #666);
+        }
+        .line{
+          max-width: 50px;
+          width: 100%;
+          height: 3px;
+          background-color: #666;
+          display: block;
+          margin: auto;
+        }
+        p{
+          @include myFonts('Open Sans', 300, 20px, #000);
+          line-height: 1.55;
+        }
+      }
+      .about__diplom{
+        img{
+          max-width: 280px;
+          width: 100%;
+        }
+      }
+    }
+    .price__button{
+      display: flex;
+      justify-content: center;
+      padding: 90px 0 0;
+      .callMe{
+        display: inline-block;
+        width: 480px;
+        height: 80px;
+        line-height: 80px;
+        padding: 8px 10px;
+        border: 5px solid #6997d3;
+        background: none;
+        margin: 0 auto;
+        text-align: center;
+        border-radius: 3px;
+        a{
+          @include myFonts('PT serif', 700, 26px, #6997d3);
+          text-decoration: none;
+        }
+      }
+      .callMe:hover{
+        border: 5px solid white;
+        background: white;
+        a{color: #6997d3; font-size: 30px;}
+      }
+    }
+  }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+#about{
+  .container{
+    flex-direction: column;
+
+    .price__button .callMe{
+      height: auto;
+      line-height: 40px;
+      width: 260px;
+    }
+  }
+}
+}
+/*-----------------END About-----------------*/
+
+/*----------------Portfolio------------------*/
+#portfolio{
+  padding: 150px 20px;
+  .container{
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    h3{
+      margin-top: 0;
+      text-align: center;
+      @include myFonts('PT serif', 600, 42px, #000);
+    }
+    $sizePhoto: 520px;
+    .portfolio__block{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      .portfolio__block__card{
+        max-width: $sizePhoto;
+        overflow: hidden;
+        text-align: center;
+        p{
+          @include myFonts('Open Sans', 500, 20px, #000);
+        }
+        img{
+          width: $sizePhoto;
+          height: auto;
+          -webkit-transition: all 1s ease;
+          -moz-transition: all 1s ease;
+          -ms-transition: all 1s ease;
+          -o-transition: all 1s ease;
+          transition: all 1s ease;
+          -webkit-transform-origin:center !important;
+          -moz-transform-origin:center !important;
+          -ms-transform-origin:center !important;
+          -o-transform-origin:center !important;
+          transform-origin:center !important;
+
+        }
+        img:hover{
+          -webkit-transform:scale(1.1);
+          -moz-transform:scale(1.1);
+          -ms-transform:scale(1.1);
+          -o-transform:scale(1.1);
+          transform:scale(1.1);
+          cursor: pointer;
+        }
+      }
+      .portfolio__block__btn{
+        display: none;
+      }
+    }
+  }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+  #portfolio{
+    .container{
+      .portfolio__block{
+        .portfolio__block__card{
+          position: relative;
+          img{
+            margin-left: -75px;
+          }
+          .portfolio__block__btn{
+            display: block;
+            position: absolute;
+            z-index: 900;
+            width: 100%;
+            height: 60px;
+            opacity: .7;
+            top: 267px;
+            background: #6997d3;
+            @include myFonts('Open Sans', 600, 20px, #fff);
+            line-height: 60px;
+            vertical-align: middle;
+            text-align: center;
+            margin-top: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+/*----------------END Portfolio------------------*/
+
+/*----------------Reviews------------------*/
+#review{
+  padding: 150px 20px;
+  background-color: #e0ecfc;
+  .container{
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    .review__title{
+      h3{
+        margin-top: 0;
+        @include myFonts('PT serif', 600, 42px, #000);
+        text-align: center;
+      }
+    }
+  }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+  #review{
+    .container{
+      .review__block{
+        flex-direction: column;
+      }
+    }
+  }
+}
+/*----------------END Reviews------------------*/
+
+/*----------------Services------------------*/
+#services{
+  padding: 150px 20px;
+  .container{
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    .services__title{
+      margin-bottom: 70px;
+      h3{
+        margin-top: 0;
+        @include myFonts('PT serif', 600, 42px, #000);
+        text-align: center;
+      }
+      .container_h4{
+        max-width: 560px;
+        margin: auto;
+        h4{
+          @include myFonts('Open sans', 300, 24px, #000);
+          text-align: center;
+        }
+      }
+    }
+    .services__block{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      //margin: ;
+      .services__block__card{
+        max-width: 360px;
+        margin: 30px auto;
+        img{
+          height: 35px;
+          width: 35px;
+          float: left;
+          margin-right: 16px;
+        }
+        h4{
+          @include myFonts('PT serif', 600, 18px, #000);
+          line-height: 35px;
+          margin: 0;
+        }
+        p{
+          @include myFonts('Open sans', 300, 16px, #000);
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+}
+/*----------------END Services------------------*/
+
+/*----------------Price------------------*/
+#price{
+  background-color: #e0ecfc;
+  padding: 150px 30px;
+  .container{
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    .price__title{
+      h4{
+        @include myFonts('PT serif', 600, 42px, #000);
+        margin-top: 0;
+        text-align: center;
+      }
+    }
+    .price__block{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      .price__block__card{
+        max-width: 300px;
+        border: 1px solid #e0e6ed;
+        border-radius: 9px;
+        box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.10);
+        padding: 40px 30px;
+        strong{
+          @include myFonts('PT serif', 600, 22px, #000);
+          text-align: center;
+          margin: 23%;
+        }
+        p.cost{
+          @include myFonts('PT serif', 600, 42px, #000);
+          text-align: center;
+        }
+        p{
+          @include myFonts('Open sans', 300, 16px, #000);
+          text-align: left;
+        }
+        ul li{
+          @include myFonts('Open sans', 300, 16px, #000);
+        }
+      }
+    }
+    .price__button{
+      display: flex;
+      justify-content: center;
+      padding: 90px 0 0;
+      .callMe{
+        display: inline-block;
+        width: 480px;
+        height: 80px;
+        line-height: 80px;
+        padding: 8px 10px;
+        border: 5px solid #6997d3;
+        background: none;
+        margin: 0 auto;
+        text-align: center;
+        border-radius: 3px;
+        a{
+          @include myFonts('PT serif', 700, 26px, #6997d3);
+          text-decoration: none;
+        }
+      }
+      .callMe:hover{
+        border: 5px solid white;
+        background: white;
+        a{color: #6997d3; font-size: 30px;}
+      }
+    }
+  }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+  #price{
+    .container{
+      .price__block{
+        .price__block__card{
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+}
+/*----------------END Price------------------*/
+
+/*-----------------Footer-----------------*/
+#mail{
+  padding: 150px 5px;
+  .container{
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .mail__block{
+    border: 15px solid #6997d3;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+    padding: 60px 45px 70px;
+    text-align: center;
+    h3{
+      @include myFonts('PT serif', 600, 38px, #000);
+      margin: 0;
+    }
+
+    #messeges{@include myFonts('Open sans', 300, 22px, #000);}
+
+    form input, input:focus{
+      outline: none;
+      border: none;
+    }
+    #formMain{
+      max-width: 560px;
+      margin: 74px auto 0;
+      display: flex;
+      flex-direction: column;
+      /*Стили полей для ввода*/
+      #name,
+      #telephone{
+        background: none;
+        border-bottom: 1px solid #d6d6d6;
+        text-align: left;
+        @include myFonts('PT serif', 300, 16px, #000);
+        padding-bottom: 18px;
+        margin-bottom: 20px;
+      }
+      /*Стили полей при клике по ним*/
+      #name:focus,
+      #telephone:focus{
+        border-bottom: 1px solid #d6d6d6;
+      }
+      @mixin placehold(){
+        @include myFonts('PT serif', 300, 16px, #d6d6d6);
+      }
+      /*Стили текста, выводящегося в placeholder*/
+      ::-webkit-input-placeholder {
+        @include placehold();
+      }
+      :-moz-placeholder {
+        @include placehold();
+      }  /* Firefox 18- */
+      :-ms-input-placeholder {
+        @include placehold();
+      }
+      ::placeholder {
+        @include placehold();
+      }
+      /*Стили для кнопки*/
+      #btn_mail {
+        max-width: 272px;
+        height: 56px;
+        background: #6997d3;
+        border: none;
+        border-radius: 30px;
+        @include myFonts('PT serif', 700, 16px, #FFF);
+        cursor: pointer;
+        padding-left: 40px;
+        padding-right: 40px;
+        margin: 10px auto 0;
+      }
+      //.applicationButton:hover {
+      //  background-image: linear-gradient(-263deg, #3f7bbe 0%, #160f2c 100%);
+      //}
+    }
+
+  }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+  #mail{
+    .container{
+      .mail__block{
+        border: 10px solid #6997d3;
+        box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.3);
+        padding: 60px 25px 70px;
+        text-align: center;
+        h3{font-size: 28px}
+        h4{font-size: 18px}
+      }
+    }
+  }
+}
+/*-----------------END Footer-----------------*/
+
+/*-----------------Footer-----------------*/
+.footer{
+  background-color: #e0ecfc;
+  width: 100%;
+  padding: 180px 0;
+  .container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    .phone{@include myFonts('PT serif', 600, 48px, #000);}
+    .mail{@include myFonts('PT serif', 600, 48px, #000);}
+    .text{
+      @include myFonts('Open sans', 300, 18px, #000);
+      margin-top: 45px;
+      margin-bottom: 30px;
+    }
+    .social{@include mySocial;}
+  }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+  .footer{
+    .container{
+      .phone{font-size: 28px}
+      .mail{font-size: 28px}
+      .text{font-size: 18px}
+    }
+  }
+}
+/*-----------------END Footer-----------------*/
+
+/* Окно */
+
+.overlay_popup {
+  display:none;
+  position:fixed;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100%;
+  z-index: 998;
+  top:0;
+  right:0;
+  left:0;
+  bottom:0;
+  background:#000;
+  opacity:0.5;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  margin: 100px auto 0 auto;
+  max-width: 760px;
+  width: 100%;
+  .container{
+    max-width: 760px;
+    width: 100%;
+    background: #fff;
+  }
+  .mail__block{
+    border: 15px solid #6997d3;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+    padding: 60px 45px 70px;
+    text-align: center;
+    h3{
+      @include myFonts('PT serif', 600, 38px, #000);
+      margin: 0;
+    }
+
+    #messeges{@include myFonts('Open sans', 300, 22px, #000);}
+
+    form input, input:focus{
+      outline: none;
+      border: none;
+    }
+    #formMain{
+      max-width: 560px;
+      margin: 74px auto 0;
+      display: flex;
+      flex-direction: column;
+      /*Стили полей для ввода*/
+      #name,
+      #telephone{
+        background: none;
+        border-bottom: 1px solid #d6d6d6;
+        text-align: left;
+        @include myFonts('PT serif', 300, 16px, #000);
+        padding-bottom: 18px;
+        margin-bottom: 20px;
+      }
+      /*Стили полей при клике по ним*/
+      #name:focus,
+      #telephone:focus{
+        border-bottom: 1px solid #d6d6d6;
+      }
+      @mixin placehold(){
+        @include myFonts('PT serif', 300, 16px, #d6d6d6);
+      }
+      /*Стили текста, выводящегося в placeholder*/
+      ::-webkit-input-placeholder {
+        @include placehold();
+      }
+      :-moz-placeholder {
+        @include placehold();
+      }  /* Firefox 18- */
+      :-ms-input-placeholder {
+        @include placehold();
+      }
+      ::placeholder {
+        @include placehold();
+      }
+      /*Стили для кнопки*/
+      #btn_mail {
+        max-width: 272px;
+        height: 56px;
+        background: #6997d3;
+        border: none;
+        border-radius: 30px;
+        @include myFonts('PT serif', 700, 16px, #FFF);
+        cursor: pointer;
+        padding-left: 40px;
+        padding-right: 40px;
+        margin: 10px auto 0;
+      }
+    }
+  }
+}
+
